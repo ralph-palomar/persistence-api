@@ -1,0 +1,139 @@
+openapi: 3.0.1
+info:
+  title: Persistence API
+  description: Persist data to a NoSQL database
+  contact:
+    email: phlar89@gmail.com
+  version: 1.0.0
+servers:
+- url: https://www.tes8.link/public/api/v1/persistence
+security:
+- APIKeyAuth: []
+paths:
+  /save:
+    post:
+      description: Saves data to the specified collection name
+      operationId: save_post
+      parameters:
+      - name: collection
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "201":
+          description: Created
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /retrieve/{id}:
+    get:
+      description: Retrieve data by specified ID from the collection
+      operationId: retrieve_id_get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: collection
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /retrieve:
+    get:
+      description: Retrieve all data from the collection
+      operationId: retrieve_get
+      parameters:
+      - name: collection
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /modify/{id}:
+    put:
+      description: Update data by specified ID from the collection
+      operationId: modify_id_put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: collection
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /remove/{id}:
+    get:
+      description: Delete data by specified ID from the collection
+      operationId: remove_id_get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: collection
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Success
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas: {}
+  securitySchemes:
+    APIKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_APIKeyAuth
+
