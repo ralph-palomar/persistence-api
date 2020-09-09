@@ -45,10 +45,10 @@ def retrieve_get(collection):  # noqa: E501
 
     :rtype: List[object]
     """
-    return 'do some magic!'
+    return processor.query_all(collection)
 
 
-def retrieve_id_get(id, collection):  # noqa: E501
+def retrieve_id_get(id_, collection):  # noqa: E501
     """retrieve_id_get
 
     Retrieve data by specified ID from the collection # noqa: E501
@@ -60,7 +60,7 @@ def retrieve_id_get(id, collection):  # noqa: E501
 
     :rtype: object
     """
-    return 'do some magic!'
+    return processor.query_one(id_, collection)
 
 
 def save_post(collection, body=None):  # noqa: E501
