@@ -15,10 +15,9 @@ def insert_data(payload, collection):
 
 def query_all(collection):
     result = list(m_db[collection].find())
-    list_of_id = []
     for item in result:
-        list_of_id.append(str(item['_id']))
-    return list_of_id
+        item['_id'] = str(item['_id'])
+    return result
 
 
 def query_one(id, collection):
